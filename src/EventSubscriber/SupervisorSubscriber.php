@@ -33,7 +33,12 @@ class SupervisorSubscriber implements EventSubscriberInterface
             ->transport('telegram')
         ;
 
-        return $this->chatter->send($message);
+        try {
+            return $this->chatter->send($message);
+        }
+        catch (\Exception $e) {
+            // @todo: log error
+        }
     }
 
     public static function getSubscribedEvents(): array
@@ -48,19 +53,22 @@ class SupervisorSubscriber implements EventSubscriberInterface
 
     public function onProcessStarted(ProcessStartedEvent $event)
     {
+        /*
         $text = "[Supervisor Watchdog Service] ";
         $text .= sprintf("started process %s", $event->getProcessName());
 
         $this->notify($text);
-
+        */
     }
 
     public function onProcessStopped(ProcessStoppedEvent $event)
     {
+        /*
         $text = "[Supervisor Watchdog Service] ";
         $text .= sprintf("stopped process %s", $event->getProcessName());
 
         $this->notify($text);
+        */
     }
 
     public function onProcessesStarted(ProcessesStartedEvent $event)
